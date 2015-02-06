@@ -18,7 +18,7 @@ public class kosTarget {
     kosTarget(String t, String a) {
         this.attack = a;
         this.target = t;
-        this.priority = 5;
+        this.priority = 50;
     }
 
     kosTarget(String t, String a, int p) {
