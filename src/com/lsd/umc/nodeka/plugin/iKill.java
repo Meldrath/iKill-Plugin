@@ -47,9 +47,9 @@ public class iKill {
 
         if ("add".equals(argArray.get(0))) {
             if (argArray.get(1) != null && argArray.get(2) != null && argArray.get(3) != null) {
-                targets.add(new kosTarget(argArray.get(1), argArray.get(2), Integer.getInteger(argArray.get(3))));
+                this.targets.add(new kosTarget(argArray.get(1), argArray.get(2), Integer.getInteger(argArray.get(3))));
             } else if (argArray.get(1) != null && argArray.get(2) != null && argArray.get(3) == null) {
-                targets.add(new kosTarget(argArray.get(1), argArray.get(2)));
+                this.targets.add(new kosTarget(argArray.get(1), argArray.get(2)));
             } else {
                 this.script.captureMatch(AnsiTable.getCode("light red") + "iKill: Please enter a valid target and attack.");
             }
@@ -57,9 +57,9 @@ public class iKill {
 
         if ("remove".equals(argArray.get(0))) {
             if (argArray.get(1) != null) {
-                for (kosTarget o : targets) {
+                for (kosTarget o : this.targets) {
                     if (o.getTarget().equals(argArray.get(1))) {
-                        targets.remove(o);
+                        this.targets.remove(o);
                     }
                 }
             } else {
@@ -69,7 +69,7 @@ public class iKill {
 
         if ("update".equals(argArray.get(0))) {
             if (argArray.get(1) != null && argArray.get(2) != null) {
-                for (kosTarget o : targets) {
+                for (kosTarget o : this.targets) {
                     if (o.getTarget().equals(argArray.get(1))) {
                         o.setAttack(argArray.get(2));
                     }
@@ -80,7 +80,7 @@ public class iKill {
         }
 
         if ("list".equals(argArray.get(0))) {
-            for (kosTarget o : targets) {
+            for (kosTarget o : this.targets) {
                 this.script.capture(AnsiTable.getCode("yellow") + "NAME: " + o.getTarget() + AnsiTable.getCode("white") + "ATTACK: " + o.getAttack());
             }
         }
@@ -119,19 +119,19 @@ public class iKill {
         }
 
         if (roomCheck) {
-            parseNonCombat(nonCombatLines);
+            parseNonCombat();
         }
     }
 
-    private void parseNonCombat(Queue nonCombatLines) {
+    private void parseNonCombat() {
         int highestPriority = 100;
         String highestPriorityName = "";
         String highestPriorityAttack = "";
         
-        for (Object l : nonCombatLines) {
+        for (Object l : this.nonCombatLines) {
             Matcher t = target.matcher(l.toString());
             if (t.find()) {
-                for (kosTarget o : targets) {
+                for (kosTarget o : this.targets) {
                     if (o.getTarget().equals(t.group(3))) {
                         if (o.getPriority() > highestPriority) {
                             highestPriority = o.getPriority();
