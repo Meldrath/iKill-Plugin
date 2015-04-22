@@ -218,6 +218,6 @@ public class iKill {
     }
 
     private void attack(String name, String attack) {
-        script.send(attack + " " + name);
+        script.parse(attack + " " + name);
     }
 }
